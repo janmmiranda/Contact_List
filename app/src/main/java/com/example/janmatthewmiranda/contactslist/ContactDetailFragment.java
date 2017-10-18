@@ -1,7 +1,9 @@
 package com.example.janmatthewmiranda.contactslist;
 
 
+import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.widget.EditText;
 
 import java.io.Serializable;
 
+import static android.R.attr.button;
 import static com.example.janmatthewmiranda.contactslist.R.id.add;
 import static com.example.janmatthewmiranda.contactslist.R.id.addBtnPerson;
 
@@ -23,6 +26,17 @@ public class ContactDetailFragment extends Fragment implements View.OnClickListe
 
     Button addPerson;
     Bundle bundle;
+    OnPersonListener mlistener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mlistener = (OnPersonListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + "must implement OnPersonListener");
+        }
+    }
 
     public ContactDetailFragment() {
         // Required empty public constructor
@@ -37,7 +51,12 @@ public class ContactDetailFragment extends Fragment implements View.OnClickListe
         addPerson = (Button) view.findViewById(R.id.addBtnPerson);
         addPerson.setOnClickListener(this);
         bundle = new Bundle();
+
         return view;
+    }
+
+    public void onActivityCreated(Bundle savedState) {
+        super.onActivityCreated(savedState);
     }
 
     public void onClick(View v){
@@ -46,13 +65,29 @@ public class ContactDetailFragment extends Fragment implements View.OnClickListe
         EditText etPhone = (EditText) view.findViewById(R.id.phoneText);
         String contactPhone = etName.getText().toString();
 
-        SimpleContact person = new SimpleContact(contactName, contactPhone);
+        boolean check = checkText(etName, etPhone);
+        if(check) {
+            SimpleContact person = new SimpleContact(contactName, contactPhone);
 
 
-        f2 = new ContactListFragment();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.id1, f2);
-        ft.commit();
+            f2 = new ContactListFragment();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.id1, f2);
+            ft.commit();
+        }
+    }
+
+    public interface OnPersonListener {
+        public void OnPersonSelected(Uri personUri);
+    }
+
+    public boolean checkText(EditText checkName,EditText checkPhone) {
+        if (checkName.getText().toString().trim().equals("") && checkPhone.getText().toString().trim().equals("")){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
 }

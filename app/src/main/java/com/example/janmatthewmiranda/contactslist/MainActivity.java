@@ -39,6 +39,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addToList() {
-//        SimpleContact person
+
     }
 }
