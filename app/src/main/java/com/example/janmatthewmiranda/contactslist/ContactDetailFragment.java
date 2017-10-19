@@ -3,7 +3,9 @@ package com.example.janmatthewmiranda.contactslist;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.net.Uri;
+import android.net.wifi.aware.PublishConfig;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -24,61 +26,63 @@ import static com.example.janmatthewmiranda.contactslist.R.id.addBtnPerson;
  */
 public class ContactDetailFragment extends Fragment implements View.OnClickListener{
 
+    onAddPersonClickListener mCallback;
+    ContactListFragment f2;
     Button addPerson;
-    Bundle bundle;
-    OnPersonListener mlistener;
+    EditText etName;
+    EditText etPhone;
+    View view;
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mlistener = (OnPersonListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + "must implement OnPersonListener");
-        }
+    public interface onAddPersonClickListener {
+        public void onAddPersonClick();
     }
 
     public ContactDetailFragment() {
         // Required empty public constructor
     }
 
-    ContactListFragment f2;
-    View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_contact_detail, container, false);
-        addPerson = (Button) view.findViewById(R.id.addBtnPerson);
+        Button addPerson = (Button) view.findViewById(R.id.addBtnPerson);
         addPerson.setOnClickListener(this);
-        bundle = new Bundle();
-
         return view;
     }
 
-    public void onActivityCreated(Bundle savedState) {
-        super.onActivityCreated(savedState);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mCallback = (onAddPersonClickListener) context;
+        } catch(ClassCastException e) {
+            throw new ClassCastException(context.toString() + "must implement OnSelectListener");
+        }
     }
 
     public void onClick(View v){
         EditText etName = (EditText) view.findViewById(R.id.nameText);
-        String contactName = etName.getText().toString();
         EditText etPhone = (EditText) view.findViewById(R.id.phoneText);
-        String contactPhone = etName.getText().toString();
 
         boolean check = checkText(etName, etPhone);
         if(check) {
-            SimpleContact person = new SimpleContact(contactName, contactPhone);
-
-
-            f2 = new ContactListFragment();
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.id1, f2);
-            ft.commit();
+            switch(v.getId()) {
+                case R.id.addBtnPerson:
+                    mCallback.onAddPersonClick();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
-    public interface OnPersonListener {
-        public void OnPersonSelected(Uri personUri);
+    public EditText getNameText() {
+        EditText etName = (EditText) view.findViewById(R.id.nameText);
+        return etName;
+    }
+
+    public EditText getPhoneText() {
+        EditText etPhone = (EditText) view.findViewById(R.id.phoneText);
+        return etPhone;
     }
 
     public boolean checkText(EditText checkName,EditText checkPhone) {
