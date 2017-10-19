@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +35,7 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
     View view;
     ListView contactList;
     ContactDetailFragment f1;
+    ContactProfileFragment f2;
     String[] from = {"name", "number"};
     int[] to = {R.id.nameStore, R.id.nameText};
 
@@ -70,19 +73,25 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
         lvContacts = (ListView) view.findViewById(R.id.contactView);
         contactAdapter = new SimpleAdapter(getContext(), items, R.layout.contact_list_adapter, from, to);
         lvContacts.setAdapter(contactAdapter);
+        setupListViewListener();
         return view;
     }
 
-//    private void setuoListViewListener() {
-//        lvContacts.setOnItemClickListener(
-//                new AdapterView.OnItemClick() {
-//                    @Override
-//                    public boolean onItemClickListener(AdapterView<?> adapter, View item, int pos, long id) {
-//                        String task;
-//                        return true;
-//                    }
-//                });
-//    }
+    private void setupListViewListener() {
+        lvContacts.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapter, View item, int pos, long id) {
+                        f2 = new ContactProfileFragment();
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        SimpleContact tempC = list.get(pos);
+                        f2.setContact(tempC);
+
+                        ft.replace(R.id.id1, f2);
+                        ft.commit();
+                    }
+                });
+    }
 
     public void onClick(View v) {
         f1 = new ContactDetailFragment();

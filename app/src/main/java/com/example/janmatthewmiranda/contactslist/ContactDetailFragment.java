@@ -45,7 +45,7 @@ public class ContactDetailFragment extends Fragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_contact_detail, container, false);
-        Button addPerson = (Button) view.findViewById(R.id.addBtnPerson);
+        addPerson = (Button) view.findViewById(R.id.addBtnPerson);
         addPerson.setOnClickListener(this);
         return view;
     }

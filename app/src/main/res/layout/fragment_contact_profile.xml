@@ -29,7 +29,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/nameText"
+            android:id="@+id/nameT"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:textAlignment="center" />
@@ -43,7 +43,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/phoneText"
+            android:id="@+id/phoneT"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:ems="10"

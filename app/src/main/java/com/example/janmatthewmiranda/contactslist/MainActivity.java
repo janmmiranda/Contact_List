@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements ContactDetailFragment.onAddPersonClickListener, ContactListFragment.onAddPersonClickListener {
+public class MainActivity extends AppCompatActivity implements ContactDetailFragment.onAddPersonClickListener, ContactListFragment.onAddPersonClickListener, ContactProfileFragment.onAddPersonClickListener {
 
 //    ContactDetailFragment f1 = new ContactDetailFragment();;
     ContactListFragment f2 = new ContactListFragment();;
