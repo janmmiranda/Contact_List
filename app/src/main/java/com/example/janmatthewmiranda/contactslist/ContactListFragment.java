@@ -8,6 +8,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -38,8 +39,6 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
     public void addListE(SimpleContact c) {
         list.add(c);
         items = getItems();
-        contactAdapter = new SimpleAdapter(this, items, R.layout.contact_list_adapter, from, to);
-        lvContacts.setAdapter(contactAdapter);
     }
 
     public interface onAddPersonClickListener {
@@ -70,10 +69,20 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
         items = getItems();
         lvContacts = (ListView) view.findViewById(R.id.contactView);
         contactAdapter = new SimpleAdapter(getContext(), items, R.layout.contact_list_adapter, from, to);
-
+        lvContacts.setAdapter(contactAdapter);
         return view;
     }
 
+//    private void setuoListViewListener() {
+//        lvContacts.setOnItemClickListener(
+//                new AdapterView.OnItemClick() {
+//                    @Override
+//                    public boolean onItemClickListener(AdapterView<?> adapter, View item, int pos, long id) {
+//                        String task;
+//                        return true;
+//                    }
+//                });
+//    }
 
     public void onClick(View v) {
         f1 = new ContactDetailFragment();
