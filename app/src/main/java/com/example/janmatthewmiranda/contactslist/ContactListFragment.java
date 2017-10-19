@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -36,8 +37,10 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
     ListView contactList;
     ContactDetailFragment f1;
     ContactProfileFragment f2;
+    CheckBox cbx;
     String[] from = {"name", "number"};
     int[] to = {R.id.nameStore, R.id.nameText};
+    int lvPos;
 
     public void addListE(SimpleContact c) {
         list.add(c);
@@ -70,6 +73,7 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
         addContact = (Button) view.findViewById(R.id.addBtnCL);
         addContact.setOnClickListener(this);
         items = getItems();
+        cbx = (CheckBox) view.findViewById(R.id.checkBox);
         lvContacts = (ListView) view.findViewById(R.id.contactView);
         contactAdapter = new SimpleAdapter(getContext(), items, R.layout.contact_list_adapter, from, to);
         lvContacts.setAdapter(contactAdapter);
@@ -86,7 +90,6 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
                         SimpleContact tempC = list.get(pos);
                         f2.setContact(tempC);
-
                         ft.replace(R.id.id1, f2);
                         ft.commit();
                     }
@@ -94,10 +97,21 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
     }
 
     public void onClick(View v) {
-        f1 = new ContactDetailFragment();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.id1, f1);
-        ft.commit();
+        switch (v.getId()) {
+            case R.id.addBtnCL:
+                f1 = new ContactDetailFragment();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.id1, f1);
+                ft.commit();
+                break;
+            case R.id.deleteBtnCL:
+                System.out.println("item position: ");
+                break;
+            default:
+                break;
+        }
+
+
     }
 
     public ArrayList<Map<String,String>> getItems() {

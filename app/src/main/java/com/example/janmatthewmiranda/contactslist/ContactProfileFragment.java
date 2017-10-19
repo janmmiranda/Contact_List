@@ -41,6 +41,10 @@ public class ContactProfileFragment extends Fragment implements View.OnClickList
         backBtn.setOnClickListener(this);
 
         nText = (TextView) view.findViewById(R.id.nameT);
+        nText.setText(name);
+
+        pText = (TextView) view.findViewById(R.id.phoneT);
+        pText.setText(phone);
 
         return view;
     }
@@ -63,21 +67,8 @@ public class ContactProfileFragment extends Fragment implements View.OnClickList
     }
 
     public void setContact(SimpleContact myc) {
-        SimpleContact tempC = myc;
-        nText.setText(tempC.getName());
-        pText.setText(tempC.getPhone());
-    }
-
-    public TextView getnText() {
-        return  nText;
-    }
-
-    public void setText(String s){
-        nText.setText(s);
-    }
-
-    public  void setPhone(String p) {
-        pText.setText(p);
+        name = myc.getName();
+        phone = myc.getPhone();
     }
 
 }
