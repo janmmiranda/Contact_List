@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -73,13 +74,29 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
         addContact = (Button) view.findViewById(R.id.addBtnCL);
         addContact.setOnClickListener(this);
         items = getItems();
-        cbx = (CheckBox) view.findViewById(R.id.checkBox);
         lvContacts = (ListView) view.findViewById(R.id.contactView);
         contactAdapter = new SimpleAdapter(getContext(), items, R.layout.contact_list_adapter, from, to);
         lvContacts.setAdapter(contactAdapter);
         setupListViewListener();
         return view;
     }
+
+//    public View getView(int pos,View convertView, ViewGroup parent) {
+//
+//    }
+
+//    private void setupCheckListener() {
+//        cbx.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+//                if(isChecked) {
+//
+//                } else {
+//
+//                }
+//            }
+//        });
+//    }
 
     private void setupListViewListener() {
         lvContacts.setOnItemClickListener(
@@ -91,6 +108,7 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
                         SimpleContact tempC = list.get(pos);
                         f2.setContact(tempC);
                         ft.replace(R.id.id1, f2);
+                        ft.addToBackStack(null);
                         ft.commit();
                     }
                 });

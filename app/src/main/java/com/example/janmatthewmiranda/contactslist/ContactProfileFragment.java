@@ -37,8 +37,6 @@ public class ContactProfileFragment extends Fragment implements View.OnClickList
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_contact_profile, container, false);
-        backBtn = (Button) view.findViewById(R.id.backBtn);
-        backBtn.setOnClickListener(this);
 
         nText = (TextView) view.findViewById(R.id.nameT);
         nText.setText(name);
@@ -51,10 +49,6 @@ public class ContactProfileFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        f1 = new ContactListFragment();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.id1, f1);
-        ft.commit();
     }
 
     public void onAttach(Context context) {
