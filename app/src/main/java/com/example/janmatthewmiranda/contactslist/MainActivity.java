@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity implements ContactDetailFrag
     ContactDetailFragment detailFrag;
     FragmentManager fm;
     int display;
+    SimpleContact myC;
+    ArrayList<SimpleContact> list;
 
     public void onAddPersonClick() {
         if(display == 1) {
@@ -35,9 +37,8 @@ public class MainActivity extends AppCompatActivity implements ContactDetailFrag
                 conName = etName.getText().toString();
                 etPhone = detailFrag.getPhoneText();
                 conPhone = etPhone.getText().toString();
-                SimpleContact myC = new SimpleContact(conName, conPhone);
-                f2.addListE(myC);
-
+                myC = new SimpleContact(conName, conPhone);
+                addlistContact(myC);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("contact", myC);
                 fragment.setArguments(bundle);
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements ContactDetailFrag
                 etPhone = detailFrag.getPhoneText();
                 conPhone = etPhone.getText().toString();
                 SimpleContact myC = new SimpleContact(conName, conPhone);
-                f2.addListE(myC);
+                addlistContact(myC);
                 etName.setText("");
                 etPhone.setText("");
                 Bundle bundle = new Bundle();
@@ -66,6 +67,14 @@ public class MainActivity extends AppCompatActivity implements ContactDetailFrag
             }
         }
 
+    }
+
+    public void addlistContact(SimpleContact contact) {
+        list.add(contact);
+    }
+
+    public ArrayList<SimpleContact> getList(){
+        return list;
     }
 
     @Override
@@ -81,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements ContactDetailFrag
             ft.commit();
         } else {
             setContentView(R.layout.land_layout);
+            f2.setList(list);
             fm = getFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
             ft.add(R.id.idLeft, f2);

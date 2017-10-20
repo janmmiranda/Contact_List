@@ -135,6 +135,10 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
 
     }
 
+    public void setList(ArrayList<SimpleContact> list) {
+        this.list = list;
+    }
+
     public ArrayList<Map<String,String>> getItems() {
         ArrayList<Map<String,String>> array_list = new ArrayList<Map<String, String>>();
         int i = 0;
