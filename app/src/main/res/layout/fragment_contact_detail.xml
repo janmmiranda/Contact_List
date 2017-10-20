@@ -63,6 +63,7 @@
     </LinearLayout>
 
     <ListView
+        android:id="@+id/setRelationList"
         android:layout_width="match_parent"
         android:layout_height="113dp"
         android:layout_weight="0.90" />

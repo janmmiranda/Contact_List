@@ -39,7 +39,9 @@ public class MainActivity extends AppCompatActivity implements ContactDetailFrag
                 conPhone = etPhone.getText().toString();
                 myC = new SimpleContact(conName, conPhone);
                 f2.setList(list);
+                f1.setRelList(list);
                 addlistContact(myC);
+
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("contact", myC);
                 fragment.setArguments(bundle);
@@ -59,7 +61,10 @@ public class MainActivity extends AppCompatActivity implements ContactDetailFrag
                 etPhone = detailFrag.getPhoneText();
                 conPhone = etPhone.getText().toString();
                 SimpleContact myC = new SimpleContact(conName, conPhone);
+                f2.setList(list);
+                f1.setRelList(list);
                 addlistContact(myC);
+
                 etName.setText("");
                 etPhone.setText("");
                 Bundle bundle = new Bundle();
@@ -86,12 +91,14 @@ public class MainActivity extends AppCompatActivity implements ContactDetailFrag
         if(display == 1) {
             setContentView(R.layout.activity_main);
             fm = getFragmentManager();
+            f1.setRelList(list);
             FragmentTransaction ft = fm.beginTransaction();
             ft.add(R.id.id1, f2);
             ft.commit();
         } else {
             setContentView(R.layout.land_layout);
             f2.setList(list);
+            f1.setRelList(list);
             fm = getFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
             ft.add(R.id.idLeft, f2);

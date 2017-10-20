@@ -29,11 +29,9 @@ import java.util.Map;
 public class ContactListFragment extends Fragment implements View.OnClickListener {
 
     ArrayList<SimpleContact> list = new ArrayList<SimpleContact>();
-    ArrayList<Map<String,String>> items;
     onAddPersonClickListener mCallback;
     ListView lvContacts;
     ContactAdapter conAdapter;
-    SimpleAdapter contactAdapter;
     Button addContact, deleteContact;
     View view;
     ContactDetailFragment f1;
@@ -42,7 +40,6 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
 
     public void addListE(SimpleContact c) {
         list.add(c);
-        items = getItems();
     }
 
     public interface onAddPersonClickListener {
@@ -72,7 +69,7 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
         addContact.setOnClickListener(this);
         deleteContact = (Button) view.findViewById(R.id.deleteBtnCL);
         deleteContact.setOnClickListener(this);
-        items = getItems();
+
         lvContacts = (ListView) view.findViewById(R.id.contactView);
         conAdapter = new ContactAdapter(list, getContext());
         lvContacts.setAdapter(conAdapter);
@@ -135,7 +132,6 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
 
     public void setList(ArrayList<SimpleContact> list) {
         this.list = list;
-        items = getItems();
     }
 
     public ArrayList<Map<String,String>> getItems() {

@@ -16,6 +16,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static android.R.attr.button;
 import static com.example.janmatthewmiranda.contactslist.R.id.add;
@@ -27,8 +30,10 @@ import static com.example.janmatthewmiranda.contactslist.R.id.addBtnPerson;
  */
 public class ContactDetailFragment extends Fragment implements View.OnClickListener{
 
+    ArrayList<SimpleContact> list = new ArrayList<SimpleContact>();
+    ContactAdapter relAdapter;
     onAddPersonClickListener mCallback;
-    ListView relationView;
+    ListView setRelationList;
     Button addPerson;
     View view;
     int display;
@@ -48,7 +53,15 @@ public class ContactDetailFragment extends Fragment implements View.OnClickListe
         addPerson = (Button) view.findViewById(R.id.addBtnPerson);
         addPerson.setOnClickListener(this);
 
+        setRelationList = (ListView) view.findViewById(R.id.setRelationList);
+        relAdapter = new ContactAdapter(list, getContext());
+        setRelationList.setAdapter(relAdapter);
+
         return view;
+    }
+
+    public void setRelList(ArrayList<SimpleContact> list) {
+        this.list = list;
     }
 
     public void onAttach(Context context) {
