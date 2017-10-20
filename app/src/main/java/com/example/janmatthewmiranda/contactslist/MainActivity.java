@@ -26,30 +26,46 @@ public class MainActivity extends AppCompatActivity implements ContactDetailFrag
     public void onAddPersonClick() {
         if(display == 1) {
             detailFrag = (ContactDetailFragment) fm.findFragmentById(R.id.id1);
-        } else {
-            detailFrag = (ContactDetailFragment) fm.findFragmentById(R.id.idRight);
-        }
-        if (detailFrag != null) {
-            FragmentManager fm = getFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ContactListFragment fragment = new ContactListFragment();
+            if (detailFrag != null) {
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ContactListFragment fragment = new ContactListFragment();
 
-            etName = detailFrag.getNameText();
-            conName = etName.getText().toString();
-            etPhone = detailFrag.getPhoneText();
-            conPhone = etPhone.getText().toString();
-            SimpleContact myC = new SimpleContact(conName, conPhone);
-            f2.addListE(myC);
+                etName = detailFrag.getNameText();
+                conName = etName.getText().toString();
+                etPhone = detailFrag.getPhoneText();
+                conPhone = etPhone.getText().toString();
+                SimpleContact myC = new SimpleContact(conName, conPhone);
+                f2.addListE(myC);
 
-            Bundle bundle = new Bundle();
-            bundle.putParcelable("contact", myC);
-            fragment.setArguments(bundle);
-            if(display == 1) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("contact", myC);
+                fragment.setArguments(bundle);
                 ft.remove(detailFrag);
                 ft.add(R.id.id1, f2);
                 ft.commit();
             }
+        } else {
+            detailFrag = (ContactDetailFragment) fm.findFragmentById(R.id.idRight);
+            if (detailFrag != null) {
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ContactListFragment fragment = new ContactListFragment();
+
+                etName = detailFrag.getNameText();
+                conName = etName.getText().toString();
+                etPhone = detailFrag.getPhoneText();
+                conPhone = etPhone.getText().toString();
+                SimpleContact myC = new SimpleContact(conName, conPhone);
+                f2.addListE(myC);
+                etName.setText("");
+                etPhone.setText("");
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("contact", myC);
+                fragment.setArguments(bundle);
+            }
         }
+
     }
 
     @Override
