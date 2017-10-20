@@ -38,8 +38,6 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
     View view;
     ContactDetailFragment f1;
     ContactProfileFragment f2;
-    String[] from = {"name", "number"};
-    int[] to = {R.id.nameStore, R.id.nameText};
     int display;
 
     public void addListE(SimpleContact c) {
@@ -137,6 +135,7 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
 
     public void setList(ArrayList<SimpleContact> list) {
         this.list = list;
+        items = getItems();
     }
 
     public ArrayList<Map<String,String>> getItems() {

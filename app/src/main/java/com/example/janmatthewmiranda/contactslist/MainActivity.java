@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements ContactDetailFrag
     FragmentManager fm;
     int display;
     SimpleContact myC;
-    ArrayList<SimpleContact> list;
+    ArrayList<SimpleContact> list = new ArrayList<SimpleContact>();
 
     public void onAddPersonClick() {
         if(display == 1) {
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements ContactDetailFrag
                 etPhone = detailFrag.getPhoneText();
                 conPhone = etPhone.getText().toString();
                 myC = new SimpleContact(conName, conPhone);
+                f2.setList(list);
                 addlistContact(myC);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("contact", myC);
