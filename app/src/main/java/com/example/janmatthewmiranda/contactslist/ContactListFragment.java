@@ -32,16 +32,15 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
     ArrayList<Map<String,String>> items;
     onAddPersonClickListener mCallback;
     ListView lvContacts;
+    ContactAdapter conAdapter;
     SimpleAdapter contactAdapter;
-    Button addContact;
+    Button addContact, deleteContact;
     View view;
-    ListView contactList;
     ContactDetailFragment f1;
     ContactProfileFragment f2;
-    CheckBox cbx;
     String[] from = {"name", "number"};
     int[] to = {R.id.nameStore, R.id.nameText};
-    int lvPos;
+    int display;
 
     public void addListE(SimpleContact c) {
         list.add(c);
@@ -73,30 +72,17 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
         view = inflater.inflate(R.layout.fragment_contact_list, container, false);
         addContact = (Button) view.findViewById(R.id.addBtnCL);
         addContact.setOnClickListener(this);
+        deleteContact = (Button) view.findViewById(R.id.deleteBtnCL);
+        deleteContact.setOnClickListener(this);
         items = getItems();
         lvContacts = (ListView) view.findViewById(R.id.contactView);
-        contactAdapter = new SimpleAdapter(getContext(), items, R.layout.contact_list_adapter, from, to);
-        lvContacts.setAdapter(contactAdapter);
+        conAdapter = new ContactAdapter(list, getContext());
+        lvContacts.setAdapter(conAdapter);
         setupListViewListener();
+        display = getResources().getConfiguration().orientation;
+
         return view;
     }
-
-//    public View getView(int pos,View convertView, ViewGroup parent) {
-//
-//    }
-
-//    private void setupCheckListener() {
-//        cbx.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-//                if(isChecked) {
-//
-//                } else {
-//
-//                }
-//            }
-//        });
-//    }
 
     private void setupListViewListener() {
         lvContacts.setOnItemClickListener(
@@ -106,8 +92,13 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
                         f2 = new ContactProfileFragment();
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
                         SimpleContact tempC = list.get(pos);
+                        lvContacts.setAdapter(conAdapter);
                         f2.setContact(tempC);
-                        ft.replace(R.id.id1, f2);
+                        if(display == 1) {
+                            ft.replace(R.id.id1, f2);
+                        } else {
+                            ft.replace(R.id.idRight, f2);
+                        }
                         ft.addToBackStack(null);
                         ft.commit();
                     }
@@ -117,13 +108,25 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.addBtnCL:
-                f1 = new ContactDetailFragment();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.id1, f1);
-                ft.commit();
+                if(display == 1) {
+                    f1 = new ContactDetailFragment();
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.replace(R.id.id1, f1);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
                 break;
             case R.id.deleteBtnCL:
-                System.out.println("item position: ");
+                System.out.println("delete");
+                int k = 0;
+                while (k < list.size()) {
+                    if (list.get(k).isSelected()) {
+                        list.remove(k);
+                        conAdapter.notifyDataSetChanged();
+                        k--;
+                    }
+                    k++;
+                }
                 break;
             default:
                 break;

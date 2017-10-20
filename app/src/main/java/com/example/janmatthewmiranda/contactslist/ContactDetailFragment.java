@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import java.io.Serializable;
 
@@ -27,11 +28,10 @@ import static com.example.janmatthewmiranda.contactslist.R.id.addBtnPerson;
 public class ContactDetailFragment extends Fragment implements View.OnClickListener{
 
     onAddPersonClickListener mCallback;
-    ContactListFragment f2;
+    ListView relationView;
     Button addPerson;
-    EditText etName;
-    EditText etPhone;
     View view;
+    int display;
 
     public interface onAddPersonClickListener {
         public void onAddPersonClick();
@@ -47,6 +47,7 @@ public class ContactDetailFragment extends Fragment implements View.OnClickListe
         view = inflater.inflate(R.layout.fragment_contact_detail, container, false);
         addPerson = (Button) view.findViewById(R.id.addBtnPerson);
         addPerson.setOnClickListener(this);
+
         return view;
     }
 
@@ -62,6 +63,8 @@ public class ContactDetailFragment extends Fragment implements View.OnClickListe
     public void onClick(View v){
         EditText etName = (EditText) view.findViewById(R.id.nameText);
         EditText etPhone = (EditText) view.findViewById(R.id.phoneText);
+
+        System.out.println("Add Person");
 
         boolean check = checkText(etName, etPhone);
         if(check) {

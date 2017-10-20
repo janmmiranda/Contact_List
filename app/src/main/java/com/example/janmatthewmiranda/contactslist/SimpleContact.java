@@ -14,13 +14,14 @@ public class SimpleContact implements Parcelable{
     private int mData;
     private String name;
     private String phone;
-    private ArrayList<String> relation;
+    private  Boolean selected;
+    private ArrayList<SimpleContact> relationList;
 
     protected SimpleContact(Parcel in) {
         mData = in.readInt();
         name = in.readString();
         phone = in.readString();
-        relation = in.createStringArrayList();
+        relationList = in.createTypedArrayList(SimpleContact.CREATOR);
     }
 
     public static final Creator<SimpleContact> CREATOR = new Creator<SimpleContact>() {
@@ -35,6 +36,17 @@ public class SimpleContact implements Parcelable{
         }
     };
 
+    public Boolean isSelected() {
+        return selected;
+    }
+
+    SimpleContact(String name, String number){
+        this.setName(name);
+        this.setPhone(number);
+        //this.setRelation(relationList);
+        this.setSelected(false);
+    }
+
     public int describeContents() {
         return 0;
     }
@@ -43,17 +55,20 @@ public class SimpleContact implements Parcelable{
         out.writeInt(mData);
     }
 
-
-
-    public SimpleContact(String name, String phone){
-        this.name = name;
-        this.phone = phone;
+    public void setName(String n) {
+        this.name = n;
     }
 
-    public boolean setRelation(ArrayList rName){
-        relation = new ArrayList();
+    public  void setPhone(String p) {
+        this.phone = p;
+    }
 
-        return true;
+    public void setRelation(ArrayList<SimpleContact> rList){
+        this.relationList = rList;
+    }
+
+    public void  setSelected(Boolean selected) {
+        this.selected = selected;
     }
 
     public String getName() {
@@ -63,4 +78,10 @@ public class SimpleContact implements Parcelable{
     public String getPhone() {
         return phone;
     }
+
+    public  ArrayList<SimpleContact> getRelationList() {
+        return this.relationList;
+    }
+
+
 }
