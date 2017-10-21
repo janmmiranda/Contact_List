@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -31,8 +32,10 @@ import static com.example.janmatthewmiranda.contactslist.R.id.addBtnPerson;
 public class ContactDetailFragment extends Fragment implements View.OnClickListener{
 
     ArrayList<SimpleContact> list = new ArrayList<SimpleContact>();
+    ArrayList<SimpleContact> relationList = new ArrayList<SimpleContact>();
     ContactAdapter relAdapter;
     onAddPersonClickListener mCallback;
+    SimpleContact tempC;
     ListView setRelationList;
     Button addPerson;
     View view;
@@ -89,6 +92,19 @@ public class ContactDetailFragment extends Fragment implements View.OnClickListe
                     break;
             }
         }
+
+//        int k = 0;
+//        while (k < list.size()) {
+//            if (list.get(k).isSelected()) {
+//                tempC = list.get(k);
+//                relationList.add(tempC);
+//                //System.out.println("rname " + k + " " + relationList.get(k).getName());
+//            }
+//            k++;
+//        }
+    }
+    public ArrayList<SimpleContact> getRelationList(){
+        return list;
     }
 
     public EditText getNameText() {

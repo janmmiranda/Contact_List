@@ -29,7 +29,6 @@ import java.util.Map;
 public class ContactListFragment extends Fragment implements View.OnClickListener {
 
     ArrayList<SimpleContact> list = new ArrayList<SimpleContact>();
-    onAddPersonClickListener mCallback;
     ListView lvContacts;
     ContactAdapter conAdapter;
     Button addContact, deleteContact;
@@ -42,18 +41,6 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
         list.add(c);
     }
 
-    public interface onAddPersonClickListener {
-        public void onAddPersonClick();
-    }
-
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            mCallback = (ContactListFragment.onAddPersonClickListener) context;
-        } catch(ClassCastException e) {
-            throw new ClassCastException(context.toString() + "must implement OnSelectListener");
-        }
-    }
 
     public ContactListFragment() {
         // Required empty public constructor
@@ -88,7 +75,9 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
                         SimpleContact tempC = list.get(pos);
                         lvContacts.setAdapter(conAdapter);
+                        System.out.println("going to profile");
                         f2.setContact(tempC);
+                       // System.out.println("relation list size is " + tempC.getRelationList().size());
                         if(display == 1) {
                             ft.replace(R.id.id1, f2);
                         } else {
@@ -105,6 +94,7 @@ public class ContactListFragment extends Fragment implements View.OnClickListene
             case R.id.addBtnCL:
                 if(display == 1) {
                     f1 = new ContactDetailFragment();
+                    f1.setRelList(list);
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.replace(R.id.id1, f1);
                     ft.addToBackStack(null);

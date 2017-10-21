@@ -4,6 +4,7 @@ import android.app.FragmentTransaction;
 import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements ContactDetailFragment.onAddPersonClickListener, ContactListFragment.onAddPersonClickListener, ContactProfileFragment.onAddPersonClickListener {
+public class MainActivity extends AppCompatActivity implements ContactDetailFragment.onAddPersonClickListener{
 
     ContactDetailFragment f1 = new ContactDetailFragment();;
     ContactListFragment f2 = new ContactListFragment();;
@@ -24,22 +25,37 @@ public class MainActivity extends AppCompatActivity implements ContactDetailFrag
     int display;
     SimpleContact myC;
     ArrayList<SimpleContact> list = new ArrayList<SimpleContact>();
+    ArrayList<SimpleContact> relationList = new ArrayList<SimpleContact>();
 
     public void onAddPersonClick() {
         if(display == 1) {
             detailFrag = (ContactDetailFragment) fm.findFragmentById(R.id.id1);
             if (detailFrag != null) {
+                //fragments
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ContactListFragment fragment = new ContactListFragment();
 
+                //getting elements to put in contact object
                 etName = detailFrag.getNameText();
                 conName = etName.getText().toString();
                 etPhone = detailFrag.getPhoneText();
                 conPhone = etPhone.getText().toString();
-                myC = new SimpleContact(conName, conPhone);
+                //create and set new contact
+                //relationList = f1.getRelationList();
+                int k = 0;
+                SimpleContact tempC;
+                while (k < list.size()) {
+                    if (list.get(k).isSelected()) {
+                        tempC = list.get(k);
+                        relationList.add(tempC);
+                        //System.out.println("rname " + k + " " + relationList.get(k).getName());
+                    }
+                    k++;
+                }
+                myC = new SimpleContact(conName, conPhone, relationList);
+                //myC.setRelation(relationList);
                 f2.setList(list);
-                f1.setRelList(list);
                 addlistContact(myC);
 
                 Bundle bundle = new Bundle();
@@ -60,7 +76,8 @@ public class MainActivity extends AppCompatActivity implements ContactDetailFrag
                 conName = etName.getText().toString();
                 etPhone = detailFrag.getPhoneText();
                 conPhone = etPhone.getText().toString();
-                SimpleContact myC = new SimpleContact(conName, conPhone);
+                SimpleContact myC = new SimpleContact(conName, conPhone, relationList);
+                Log.d("list1", list.toString());
                 f2.setList(list);
                 f1.setRelList(list);
                 addlistContact(myC);
@@ -97,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements ContactDetailFrag
             ft.commit();
         } else {
             setContentView(R.layout.land_layout);
+            Log.d("list", list.toString());
             f2.setList(list);
             f1.setRelList(list);
             fm = getFragmentManager();

@@ -40,10 +40,10 @@ public class SimpleContact implements Parcelable{
         return selected;
     }
 
-    SimpleContact(String name, String number){
+    SimpleContact(String name, String number, ArrayList<SimpleContact> relationList){
         this.setName(name);
         this.setPhone(number);
-        //this.setRelation(relationList);
+        this.setRelation(relationList);
         this.setSelected(false);
     }
 
@@ -83,5 +83,13 @@ public class SimpleContact implements Parcelable{
         return this.relationList;
     }
 
+    public String toString() {
+        String ret = "Name: " + name + "\nNumber: " + phone + "\nRelationships: ";
+        for (int n = 0; n < relationList.size(); n++){
+            ret += relationList.get(n).getName();
+            ret += "\n";
+        }
+        return ret;
+    }
 
 }
